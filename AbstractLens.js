@@ -1,9 +1,12 @@
+import * as algebra from algebra-0.2.6.min
 function absLENS(indexOfRefraction, length, width, shape) {
   //constructor
   this.width = width;
   this.length = length;
   this.n = indexOfRefraction; //for future purposes we will call index of refraction "n"
   this.shape = shape;
+  var equation = 0;
+
 }
 
 absLENS.prototype.draw = function(context) { //draws lens
@@ -14,8 +17,16 @@ absLENS.prototype.testIntersect = function(x,y, theta) {
   var  myresults = [];
   var intersects = false;
   var distance = 0;
-  /*
+
   ADD SOME CALCULATION TO DETERMINE if it intersects
+  switch (this.shape) {
+    case convex:
+    case sphere:
+    default:
+  }
+
+
+
   */
 
   if (intersects) {
@@ -38,6 +49,7 @@ absLENS.prototype.doLens = function(x,y,theta) {
 
   /*
   some calculation to calculate stuff for the new refracted ray
+  will need to draw a perpendicular, find angle relative to that, then calculate refracted angle, then convert refracted into the general angle used for the program
   */
 
   myresults.append(newX);
@@ -45,3 +57,13 @@ absLENS.prototype.doLens = function(x,y,theta) {
   myresults.append(newTheta);
   return myresults
 }
+
+function ConvexLENS(indexOfRefraction, length, width) {
+  //constructor
+  this.width = width;
+  this.length = length;
+  this.n = indexOfRefraction; //for future purposes we will call index of refraction "n"
+  this.shape = convex;
+}
+
+ConvexLENS.prototype = Object.create(absLENS.prototype)
