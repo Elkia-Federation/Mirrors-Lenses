@@ -38,7 +38,9 @@ absLENS.prototype.testIntersect = function(x,y, theta) {
     }
       break;
     case "sphere":
-
+      this.h = 10;
+      this.k = 10;
+      this.r = 10;
       //if false {return};
       break;
 
@@ -78,8 +80,9 @@ absLENS.prototype.doLens = function(x,y,theta) {
   var newTheta = 0;
 //calculation for intersection
 
-
+  switch (this.shape){
 //else {X = 1;}//solve for x}
+    case "parabola":
     var intersectX1 = (-this.b+Math.tan(theta)+Math.sqrt(Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y))))/(2*this.a);
     var intersectX2 = (-this.b+Math.tan(theta)-Math.sqrt(Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y))))/(2*this.a);
     var intersectY1 = this.a*Math.pow(intersectX1,2)+this.b * intersectX1+ this.c;
@@ -87,17 +90,23 @@ absLENS.prototype.doLens = function(x,y,theta) {
 
     var dist1 = Math.abs(Math.sqrt((Math.pow(intersectX1-x,2)+(Math.pow(intersectY1-y,2)))));
     var dist2 = Math.abs(Math.sqrt((Math.pow(intersectX2-x,2)+(Math.pow(intersectY2-y,2)))));
+
     if (dist1<dist2 || dist1 == dist2)
       {
         var newX = intersectX1;
         var newY = intersectY1;
         var perplineTheta = Math.atan(-1*(1/(2*this.a + this.b)));
         console.log(perplineTheta);
-        var thetaI = theta-perplineTheta; //incident angle
-        var thetaR = Math.abs(Math.asin((1/this.n)*Math.sin(thetaI)));
-        console.log(thetaR);
+        var thetaI = theta-perplineTheta;
+        console.log("incident =" + thetaI); //incident angle
+        var thetaR = (((1/this.n)*Math.sin(thetaI)));
+        console.log("refracted ="+ thetaR);
       }
+    break;
+    case "sphere":
 
+    break;
+}
 //  some calculation to calculate stuff for the new refracted ray
 //  will need to draw a perpendicular, find angle relative to that, then calculate refracted angle, then convert refracted into the general angle used for the program
 //  var perptheta = Math.atan2(-1/m);
@@ -107,14 +116,20 @@ absLENS.prototype.doLens = function(x,y,theta) {
 
   myresults.push(newX);
   myresults.push(newY);
+  console.log("x=" + newX);
+  console.log("y=" + newY);
   if (x<newX){
     myresults.push(thetaR+perplineTheta);
+    console.log("aaa");
   }
-  else if (x === newX) {
+  else if (x == newX) {
     myresults.push(theta);
+    console.log("bbb");
   }
-  else {myresults.push(perplineTheta - thetaR);}
-
+  else if (x > newX){myresults.push(thetaR - perplineTheta);
+    console.log("ccc");
+  }
+  console.log(myresults);
   return myresults
 }
 
@@ -129,6 +144,6 @@ absLENS.prototype.doLens = function(x,y,theta) {
 
 ConvexLENS.prototype = Object.create(absLENS.prototype)
 */
-var me = new absLENS(1,1,1,"parabola",150,100);
+var me = new absLENS(1.3,1,1,"parabola",150,100);
 me.testIntersect(0,0,0.5236);
 me.doLens(0,0,0.5236);
