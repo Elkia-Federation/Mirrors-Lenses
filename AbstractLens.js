@@ -1,11 +1,13 @@
-import * as algebra from algebra-0.2.6.min
-function absLENS(indexOfRefraction, length, width, shape) {
+
+function absLENS(indexOfRefraction, length, width, shape,x,y) {
   //constructor
   this.width = width;
   this.length = length;
   this.n = indexOfRefraction; //for future purposes we will call index of refraction "n"
   this.shape = shape;
-  var equation = 0;
+  this.equation = 0;
+  this.x = x;
+  this.y = y; //when drawing use -this.y
 
 }
 
@@ -18,32 +20,55 @@ absLENS.prototype.testIntersect = function(x,y, theta) {
   var intersects = false;
   var distance = 0;
 
-  ADD SOME CALCULATION TO DETERMINE if it intersects
+//  ADD SOME CALCULATION TO DETERMINE if it intersects
   switch (this.shape) {
-    case parabola:
-      if (denominator === 0){intersects = false;};
-      else {x = 1;}//solve for x}
+    case ("parabola"):
+      this.a = 1;
+      this.b = 5;
+      this.c = 3;
+      if (Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y)) < 0)
+        {break;}
+      //else {X = 1;}//solve for x}
+      else {var intersectX1 = (-this.b+Math.tan(theta)+Math.sqrt(Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y))))/(2*this.a);
+          var intersectX2 = (-this.b+Math.tan(theta)-Math.sqrt(Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y))))/(2*this.a);
+          var intersectY1 = this.a*Math.pow(intersectX1,2)+this.b * intersectX1+ this.c;
+          var intersectY2 = this.a*Math.pow(intersectX2,2)+this.b * intersectX2+ this.c;
+          intersects = true;
+
+    }
       break;
-    case sphere:
-      if hi {return hi}
+    case "sphere":
+
+      //if false {return};
       break;
-    default:
+
+  //  default:
   }
 
 
 
-  */
+//  */
 
   if (intersects) {
-    myresults.append(intersects);
+    myresults.push(intersects);
     //add some calculation
-
-    myresults.append(distance)
+    var dist1 = Math.abs(Math.sqrt((Math.pow(intersectX1-x,2)+(Math.pow(intersectY1-y,2)))));
+    var dist2 = Math.abs(Math.sqrt((Math.pow(intersectX2-x,2)+(Math.pow(intersectY2-y,2)))));
+    if (dist1 < dist2 || dist1 == dist2) {
+      myresults.push(dist1);
+      console.log(dist1);
+      console.log(dist2);
+      console.log(intersectX1);
+      console.log(intersectY1);
+      console.log(intersectX2);}
+    if (dist1 > dist2) {myresults.push(dist2);}
+    console.log(myresults);
     return myresults //a[1] should be the exact distance away from the starting point of ray to the point of intersection
   }
-  myresults.append(intersects);
-  myresults.append(distance);
-  return myresults //myresults[0] tells if it intersects, myresults[1] tells the distance
+  else{myresults.push(intersects);
+  myresults.push(distance);
+  console.log(myresults);
+  return myresults }//myresults[0] tells if it intersects, myresults[1] tells the distance
 }
 
 absLENS.prototype.doLens = function(x,y,theta) {
@@ -51,19 +76,48 @@ absLENS.prototype.doLens = function(x,y,theta) {
   var newX = 0;
   var newY = 0;
   var newTheta = 0;
+//calculation for intersection
 
-  /*
-  some calculation to calculate stuff for the new refracted ray
-  will need to draw a perpendicular, find angle relative to that, then calculate refracted angle, then convert refracted into the general angle used for the program
-  */
 
-  myresults.append(newX);
-  myresults.append(newY);
-  myresults.append(newTheta);
+//else {X = 1;}//solve for x}
+    var intersectX1 = (-this.b+Math.tan(theta)+Math.sqrt(Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y))))/(2*this.a);
+    var intersectX2 = (-this.b+Math.tan(theta)-Math.sqrt(Math.pow(this.b-Math.tan(theta),2)-(4*this.a*(this.c+Math.tan(theta)*x-y))))/(2*this.a);
+    var intersectY1 = this.a*Math.pow(intersectX1,2)+this.b * intersectX1+ this.c;
+    var intersectY2 = this.a*Math.pow(intersectX2,2)+this.b * intersectX2+ this.c;
+
+    var dist1 = Math.abs(Math.sqrt((Math.pow(intersectX1-x,2)+(Math.pow(intersectY1-y,2)))));
+    var dist2 = Math.abs(Math.sqrt((Math.pow(intersectX2-x,2)+(Math.pow(intersectY2-y,2)))));
+    if (dist1<dist2 || dist1 == dist2)
+      {
+        var newX = intersectX1;
+        var newY = intersectY1;
+        var perplineTheta = Math.atan(-1*(1/(2*this.a + this.b)));
+        console.log(perplineTheta);
+
+      }
+
+//  some calculation to calculate stuff for the new refracted ray
+//  will need to draw a perpendicular, find angle relative to that, then calculate refracted angle, then convert refracted into the general angle used for the program
+//  var perptheta = Math.atan2(-1/m);
+  //add the calculation which calculates the point of intersection
+
+
+
+  myresults.push(newX);
+  myresults.push(newY);
+  if (x<newX){
+    myresults.push(newTheta+perplineThetatheta);
+  }
+  else if (x === intersectX) {
+    myresults.push(theta);
+  }
+  else {myresults.push(perplineTheta - newTheta);}
+
   return myresults
 }
 
-function ConvexLENS(indexOfRefraction, length, width) {
+
+/*function ConvexLENS(indexOfRefraction, length, width) {
   //constructor
   this.width = width;
   this.length = length;
@@ -72,3 +126,7 @@ function ConvexLENS(indexOfRefraction, length, width) {
 }
 
 ConvexLENS.prototype = Object.create(absLENS.prototype)
+*/
+var me = new absLENS(1,1,1,"parabola",150,100);
+me.testIntersect(0,0,0.5236);
+me.doLens(0,0,0.5236);
