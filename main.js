@@ -1,6 +1,6 @@
 var startRay = [0,0,1];
-var lenses = [planeMirror(0,50,50,0)];
-var linesToDraw = [0,0,1,100];
+var lenses = [new planeMirror(0, 50, 50, 0)];
+var linesToDraw = [];
 
 function setup (){
     resize();
@@ -19,19 +19,27 @@ function refresh (){
                 console.log("2");
         }else if (lenses[0] != -1){
             for (i=0; i<lenses.length; i++){
-                var intersect = lenses[i].testIntersect(ray);
-                if (intersect[0]){
+                var intersect = [];
+                intersect[0] = lenses[i].testIntersect(ray);
+                console.log("a");
+
+                if (intersect){
+                                                    console.log("b");
+
                     if (intersect[1] < lowestDistance[0]){
-                        lowestDistance = [intersect[1], i];
+                        lowestDistance [0] = intersect[1];
+                        lowestDistance [1] = i;
+                                                                            console.log("c");
+
                     }
                 }
             }
             if (lowestDistance[0] != 1000){
-                linesToDraw[linesToDraw.length] = ray[0];
-                linesToDraw[linesToDraw.length+1] = ray[1];
-                linesToDraw[linesToDraw.length+2] = ray[2];
-                linesToDraw[linesToDraw.length+3] = lowestDistance[0];
-                ray = lenses[lowestDistance[1]].doLens(ray);
+                linesToDraw[linesToDraw.length] = startRay[0];
+                linesToDraw[linesToDraw.length] = startRay[1];
+                linesToDraw[linesToDraw.length] = startRay[2];
+                linesToDraw[linesToDraw.length] = lowestDistance[0];
+                startRay = lenses[lowestDistance[1]].doLens(ray);
             }
         }
                 console.log("3");
@@ -39,14 +47,17 @@ function refresh (){
     }
             console.log("4");
 
-    
+    linesToDraw[linesToDraw.length] = startRay[0];
+    linesToDraw[linesToDraw.length] = startRay[1];
+    linesToDraw[linesToDraw.length] = startRay[2];
+    linesToDraw[linesToDraw.length] = 1000;
     if (lenses[0] != -1){
         for (i = 0; i < lenses.length; i++){
             lenses[i].draw(ctx);
         }
     }
     drawRays();
-    setTimeout(function(){refresh();}, 10000000000);
+    setTimeout(function(){refresh();}, 10000000);
     
 }
 

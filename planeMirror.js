@@ -7,7 +7,6 @@ function planeMirror(x1,y1,x2,y2) {
     this.angle = Math.atan2(y2-y1,x2-x1);
     this.slope = (y2-y1)/(x2-x1);
     this.b = -1*(x1*((y2-y1)/(x2-x1))+y1);
-    return this;
 }
 planeMirror.prototype.draw = function() { //draws lens
     var c = document.getElementById("canvas");
@@ -27,8 +26,13 @@ planeMirror.prototype.testIntersect = function(x,y,theta) {
     var intersectY = (this.slope*intersectX)+this.b;
     if (((intersectX > this.x1) && (intersectX < this.x2))||((intersectX < this.x1) && (intersectX > this.x2))){
         if (((intersectX > this.x1) && (intersectX < this.x2))||((intersectX < this.x1) && (intersectX > this.x2))){
-            var returnValue = [true,Math.sqrt(Math.pow(x-intersectX,2)+Math.pow(y-intersecty,2))];
+            if(Math.sqrt(Math.pow(x-intersectX,2)+Math.pow(y-intersecty,2))<10){
+            var returnValue = [true, Math.sqrt(Math.pow(x-intersectX,2)+Math.pow(y-intersecty,2))];
             return returnValue
+            }else{
+            var returnValue = [false,0];
+            return returnValue
+            }
         }else{
             var returnValue = [false,0];
             return returnValue
@@ -40,11 +44,11 @@ planeMirror.prototype.testIntersect = function(x,y,theta) {
 }
 
 planeMirror.prototype.doLens = function(x,y,theta) {
-    var myresults = [];
     var raySlope = Math.tan(theta);
     var b1 = -1*((x*raySlope)+y);
     var intersectX = (this.b-b1)/(raySlope-this.slope);
     var intersectY = (this.slope*intersectX)+this.b;
     var newTheta = theta+this.angle;
-    return myresults
+    var myresults = [intersectX, intersectY, newTheta];
+    return myresults;
 }

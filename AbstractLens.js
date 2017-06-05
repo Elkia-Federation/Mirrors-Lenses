@@ -1,16 +1,4 @@
 
-function absLENS(indexOfRefraction, length, width, shape,x,y) {
-  //constructor
-  this.width = width;
-  this.length = length;
-  this.n = indexOfRefraction; //for future purposes we will call index of refraction "n"
-  this.shape = shape;
-  this.equation = 0;
-  this.x = x;
-  this.y = y; //when drawing use -this.y
-
-}
-
 absLENS.prototype.draw = function(context) { //draws lens
   return context
 }
@@ -132,6 +120,17 @@ absLENS.prototype.doLens = function(x,y,theta) {
   console.log(myresults);
   return myresults
 }
+function absLENS(indexOfRefraction, length, width, shape,x,y) {
+  //constructor
+  this.width = width;
+  this.length = length;
+  this.n = indexOfRefraction; //for future purposes we will call index of refraction "n"
+  this.shape = shape;
+  this.equation = 0;
+  this.x = x;
+  this.y = y; //when drawing use -this.y
+}
+
 
 
 /*function ConvexLENS(indexOfRefraction, length, width) {
@@ -144,6 +143,6 @@ absLENS.prototype.doLens = function(x,y,theta) {
 
 ConvexLENS.prototype = Object.create(absLENS.prototype)
 */
-var me = new absLENS(1.3,1,1,"parabola",150,100);
-me.testIntersect(0,0,0.5236);
-me.doLens(0,0,0.5236);
+//var me = new absLENS(1.3,1,1,"parabola",150,100);
+//me.testIntersect(0,0,0.5236);
+//me.doLens(0,0,0.5236);
