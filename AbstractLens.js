@@ -20,8 +20,13 @@ absLENS.prototype.testIntersect = function(x,y, theta) {
 
   ADD SOME CALCULATION TO DETERMINE if it intersects
   switch (this.shape) {
-    case convex:
+    case parabola:
+      if (denominator === 0){intersects = false;};
+      else {x = 1;}//solve for x}
+      break;
     case sphere:
+      if hi {return hi}
+      break;
     default:
   }
 
