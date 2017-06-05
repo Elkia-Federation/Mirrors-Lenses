@@ -93,7 +93,9 @@ absLENS.prototype.doLens = function(x,y,theta) {
         var newY = intersectY1;
         var perplineTheta = Math.atan(-1*(1/(2*this.a + this.b)));
         console.log(perplineTheta);
-
+        var thetaI = theta-perplineTheta; //incident angle
+        var thetaR = Math.abs(Math.asin((1/this.n)*Math.sin(thetaI)));
+        console.log(thetaR);
       }
 
 //  some calculation to calculate stuff for the new refracted ray
@@ -106,12 +108,12 @@ absLENS.prototype.doLens = function(x,y,theta) {
   myresults.push(newX);
   myresults.push(newY);
   if (x<newX){
-    myresults.push(newTheta+perplineThetatheta);
+    myresults.push(thetaR+perplineTheta);
   }
-  else if (x === intersectX) {
+  else if (x === newX) {
     myresults.push(theta);
   }
-  else {myresults.push(perplineTheta - newTheta);}
+  else {myresults.push(perplineTheta - thetaR);}
 
   return myresults
 }
