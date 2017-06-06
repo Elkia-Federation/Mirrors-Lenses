@@ -46,11 +46,11 @@ absLENS.prototype.testIntersect = function(x,y, theta) {
     var dist2 = Math.abs(Math.sqrt((Math.pow(intersectX2-x,2)+(Math.pow(intersectY2-y,2)))));
     if (dist1 < dist2 || dist1 == dist2) {
       myresults.push(dist1);
-      console.log(dist1);
-      console.log(dist2);
-      console.log(intersectX1);
-      console.log(intersectY1);
-      console.log(intersectX2);}
+      console.log("d1=" + dist1);
+      console.log("d2=" + dist2);
+      console.log("intX1= " + intersectX1);
+      console.log("intY1="+ intersectY1);
+      console.log("intX2=" +intersectX2);}
     if (dist1 > dist2) {myresults.push(dist2);}
     console.log(myresults);
     return myresults //a[1] should be the exact distance away from the starting point of ray to the point of intersection
@@ -83,8 +83,8 @@ absLENS.prototype.doLens = function(x,y,theta) {
       {
         var newX = intersectX1;
         var newY = intersectY1;
-        var perplineTheta = Math.atan(-1*(1/(2*this.a + this.b)));
-        console.log(perplineTheta);
+        var perplineTheta = Math.atan(-1*(1/(2*this.a*newX + this.b)));
+        console.log("perptheta =" + perplineTheta);
         var thetaI = theta-perplineTheta;
         console.log("incident =" + thetaI); //incident angle
         var thetaR = (((1/this.n)*Math.sin(thetaI)));
@@ -143,6 +143,6 @@ function absLENS(indexOfRefraction, length, width, shape,x,y) {
 
 ConvexLENS.prototype = Object.create(absLENS.prototype)
 */
-//var me = new absLENS(1.3,1,1,"parabola",150,100);
-//me.testIntersect(0,0,0.5236);
-//me.doLens(0,0,0.5236);
+var me = new absLENS(1.3,1,1,"parabola",150,100);
+me.testIntersect(0,0,0.5236);
+me.doLens(0,0,0.5236);
